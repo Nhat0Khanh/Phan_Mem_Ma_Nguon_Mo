@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3 class="text-danger fw-bold mb-4 text-center">Máy tính</h3>
+
+    <form action="/" method="POST" novalidate>
+        <div class="row g-3 align-items-start">
+            
+            <div class="col-md-4">
+                <label for="a" class="form-label fw-semibold">Số a</label>
+                <input type="text" 
+                       class="form-control {% if errors.a %}is-invalid{% endif %}" 
+                       id="a" 
+                       name="a" 
+                       value="{{ a }}" 
+                       placeholder="Ví dụ: 2,5">
+                {% if errors.a %}
+                    <div class="invalid-feedback d-block">{{ errors.a }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
+                <label for="op" class="form-label fw-semibold">Phép toán</label>
+                    <select class="form-select {% if errors.op %}is-invalid{% endif %}" id="op" name="op">
+                        <option value="+" {% if op == '+' %}selected{% endif %}>+</option>
+                        <option value="-" {% if op == '-' %}selected{% endif %}>-</option>
+                        <option value="*" {% if op == '*' %}selected{% endif %}>*</option>
+                        <option value="/" {% if op == '/' %}selected{% endif %}>/</option>
+                    </select>
+                {% if errors.op %}
+                    <div class="invalid-feedback d-block">{{ errors.op }}</div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
+                <label for="b" class="form-label fw-semibold">Số b</label>
+                <input type="text" 
+                       class="form-control {% if errors.b %}is-invalid{% endif %}" 
+                       id="b" 
+                       name="b" 
+                       value="{{ b }}" 
+                       placeholder="Ví dụ: 4">
+                {% if errors.b %}
+                    <div class="invalid-feedback d-block">{{ errors.b }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-danger w-100 fw-bold">Tính toán</button>
+        </div>
+    </form>
+
+    {% if result %}
+        <div class="alert alert-success mt-4 mb-0 text-center shadow-sm" role="alert">
+            <span class="fs-4 fw-bold text-success">{{ result }}</span>
+        </div>
+    {% endif %}
+{% endblock %}

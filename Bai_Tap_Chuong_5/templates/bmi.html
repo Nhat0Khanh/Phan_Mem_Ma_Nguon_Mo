@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Calculator App{% endblock %}
+
+{% block content %}
+    <div class="container col-md-8 col-lg-6 bg-white p-4 rounded shadow-sm">
+        <h3 class="text-danger fw-bold mb-4 text-center">Tính chỉ số BMI</h3>
+
+        <form action="" method="POST" novalidate>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="height" class="form-label fw-semibold">Chiều cao (cm)</label>
+                    <input type="text" 
+                           class="form-control {% if errors.height %}is-invalid{% endif %}" 
+                           id="height" 
+                           name="height" 
+                           value="{{ height }}" 
+                           placeholder="Ví dụ: 170">
+                    {% if errors.height %}
+                        <div class="invalid-feedback d-block">{{ errors.height }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-6">
+                    <label for="weight" class="form-label fw-semibold">Cân nặng (kg)</label>
+                    <input type="text" 
+                           class="form-control {% if errors.weight %}is-invalid{% endif %}" 
+                           id="weight" 
+                           name="weight" 
+                           value="{{ weight }}" 
+                           placeholder="Ví dụ: 65">
+                    {% if errors.weight %}
+                        <div class="invalid-feedback d-block">{{ errors.weight }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-danger w-100 fw-bold">Tính BMI</button>
+            </div>
+        </form>
+
+        {% if result %}
+            <div class="alert alert-{{ color_class }} mt-4 mb-0 text-center shadow-sm" role="alert">
+                <h5 class="alert-heading fw-bold mb-1">Kết quả:</h5>
+                <span class="fs-4 fw-bold">{{ result }}</span>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

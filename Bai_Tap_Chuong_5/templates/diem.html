@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Calculator App{% endblock %}
+
+{% block content %}
+    <div class="container col-md-8 col-lg-6 bg-white p-4 rounded shadow-sm">
+        <h3 class="text-danger fw-bold mb-4 text-center">Tính điểm học phần</h3>
+
+        <form action="" method="POST" novalidate>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label for="cc" class="form-label fw-semibold">Chuyên cần (10%)</label>
+                    <input type="text" 
+                           class="form-control {% if errors.cc %}is-invalid{% endif %}" 
+                           id="cc" name="cc" value="{{ cc }}" placeholder="Ví dụ: 10">
+                    {% if errors.cc %}
+                        <div class="invalid-feedback d-block">{{ errors.cc }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4">
+                    <label for="gk" class="form-label fw-semibold">Giữa kỳ (30%)</label>
+                    <input type="text" 
+                           class="form-control {% if errors.gk %}is-invalid{% endif %}" 
+                           id="gk" name="gk" value="{{ gk }}" placeholder="Ví dụ: 8">
+                    {% if errors.gk %}
+                        <div class="invalid-feedback d-block">{{ errors.gk }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4">
+                    <label for="ck" class="form-label fw-semibold">Cuối kỳ (60%)</label>
+                    <input type="text" 
+                           class="form-control {% if errors.ck %}is-invalid{% endif %}" 
+                           id="ck" name="ck" value="{{ ck }}" placeholder="Ví dụ: 9">
+                    {% if errors.ck %}
+                        <div class="invalid-feedback d-block">{{ errors.ck }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-danger w-100 fw-bold">Tính điểm</button>
+            </div>
+        </form>
+
+        {% if result %}
+            <div class="alert alert-success mt-4 mb-0 text-center shadow-sm" role="alert">
+                <h5 class="alert-heading fw-bold mb-1">Kết quả:</h5>
+                <span class="fs-4 fw-bold text-success">{{ result }}</span>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
