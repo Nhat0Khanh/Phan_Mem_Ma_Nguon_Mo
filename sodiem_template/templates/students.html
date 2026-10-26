@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Danh sách sinh viên{% endblock %}
+
+{% block content %}
+    <h2>Danh sách sinh viên</h2>
+    <div style="margin-bottom: 15px;">
+        <strong>Lọc theo lớp:</strong>
+        <a href="{{ url_for('get_students') }}" {% if not selected_class %}style="font-weight:bold;"{% endif %}>Tất cả</a>
+        {% for c in unique_classes %}
+            | <a href="{{ url_for('get_students', lop=c) }}" {% if selected_class == c %}style="font-weight:bold;"{% endif %}>{{ c }}</a>
+        {% endfor %}
+    </div>
+
+    {% if not students %}
+        <p>Không có sinh viên phù hợp</p>
+    {% else %}
+        <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>MSSV</th>
+                    <th>Họ tên</th>
+                    <th>Lớp</th>
+                    <th>Điểm TB</th>
+                    <th>Xếp loại</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for st in students %}
+                <tr>
+                    <td><a href="{{ url_for('student_detail', mssv=st.mssv) }}">{{ st.mssv }}</a></td>
+                    <td>{{ st.name }}</td>
+                    <td>{{ st.lop }}</td>
+                    <td>{{ st.dtb }}</td>
+                    <td>{{ st.xep_loai }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Tìm kiếm sinh viên{% endblock %}
+
+{% block content %}
+    <h2>Tìm kiếm sinh viên</h2>
+    <form action="{{ url_for('search') }}" method="GET">
+        <!-- Jinja2 tự động escape biến {{ query }} giúp phòng XSS -->
+        <input type="text" name="q" value="{{ query }}" placeholder="Nhập tên hoặc MSSV..." size="30">
+        <button type="submit">Tìm kiếm</button>
+    </form>
+    <br>
+
+    {% if query %}
+        {% if not results %}
+            <p>Tìm thấy 0 kết quả cho "{{ query }}"</p>
+        {% else %}
+            <p>Tìm thấy <strong>{{ results|length }}</strong> kết quả cho "<strong>{{ query }}</strong>":</p>
+            <ul>
+                {% for r in results %}
+                    <li>
+                        <a href="{{ url_for('student_detail', mssv=r.mssv) }}">{{ r.mssv }} - {{ r.info.name }}</a> ({{ r.info.lop }})
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+{% endblock %}

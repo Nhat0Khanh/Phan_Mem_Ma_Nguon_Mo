@@ -1,0 +1,29 @@
+<style>
+    .navbar-dark .navbar-nav .nav-link.active {
+        color: #d62020 !important; /* Đổi màu chữ sang đỏ */
+        font-weight: bold;         /* In đậm chữ */
+    }
+</style>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4 shadow-sm">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center fw-bold" href="/">
+            <img src="{{ url_for('static', filename='img/logo.svg') }}" 
+                 alt="MiniBlog Logo" 
+                 width="32" 
+                 height="32" 
+                 class="d-inline-block align-text-top me-2 rounded-circle">
+            MiniBlog
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav">
+                <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Trang chủ</a>
+                <a class="nav-link {% if request.path == '/gioithieu' %}active{% endif %}" href="/gioithieu">Giới thiệu</a>
+                <a class="nav-link {% if request.path == '/students' %}active{% endif %}" href="/students">Danh sách SV</a>
+                <a class="nav-link {% if request.path == '/contact' %}active{% endif %}" href="/contact">Liên hệ</a>
+            </div>
+        </div>
+    </div>
+</nav>

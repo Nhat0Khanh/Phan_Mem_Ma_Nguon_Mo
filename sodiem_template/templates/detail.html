@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Chi tiết - {{ student.name }}{% endblock %}
+
+{% block content %}
+    <h2>Thông tin chi tiết sinh viên</h2>
+    <p><strong>MSSV:</strong> {{ mssv }}</p>
+    <p><strong>Họ tên:</strong> {{ student.name }}</p>
+    <p><strong>Lớp:</strong> <a href="{{ url_for('get_students', lop=student.lop) }}">{{ student.lop }}</a></p>
+    <p><strong>Điểm TB:</strong> {{ dtb }}</p>
+    <p><strong>Xếp loại:</strong> {{ xep_loai }}</p>
+
+    <h3>Bảng điểm từng học phần</h3>
+    {% if not student.scores %}
+        <p><em>Chưa có điểm học phần nào.</em></p>
+    {% else %}
+        <table border="1" cellpadding="6" cellspacing="0">
+            <thead>
+                <tr><th>Học phần</th><th>Điểm</th></tr>
+            </thead>
+            <tbody>
+                {% for mon, diem in student.scores.items() %}
+                <tr>
+                    <td>{{ mon }}</td>
+                    <td>{{ diem }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    
+    <br>
+    <a href="{{ url_for('export_csv', mssv=mssv) }}" style="padding: 6px 12px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px;">
+        Tải bảng điểm (CSV)
+    </a>
+    <br>
+{% endblock %}

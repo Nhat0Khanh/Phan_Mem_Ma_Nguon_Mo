@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Trang chủ{% endblock %}
+
+{% block content %}
+    <h1>Trang chủ</h1>
+    <ul>
+        <li>Tổng số sinh viên: <strong>{{ total_students }}</strong></li>
+        <li>Số lớp: <strong>{{ total_classes }}</strong> <em>({{ unique_classes | join(', ') }})</em></li>
+    </ul>
+    <h3>Các liên kết:</h3>
+    <ul>
+        <li><a href="{{ url_for('get_students') }}">Xem danh sách sinh viên (/students)</a></li>
+        <li><a href="{{ url_for('search') }}">Tìm kiếm sinh viên (/search)</a></li>
+        <li><a href="{{ url_for('api_students') }}">API danh sách sinh viên (/api/students)</a></li>
+    </ul>
+{% endblock %}

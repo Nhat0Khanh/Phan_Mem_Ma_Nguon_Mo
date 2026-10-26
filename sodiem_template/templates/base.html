@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Quản lý sinh viên{% endblock %}</title>
+</head>
+<body>
+    {% block content %}{% endblock %}
+    
+    <br><br>
+    <a href="{{ url_for('index') }}">← Trang chủ</a>
+</body>
+</html>
