@@ -1,0 +1,15 @@
+
+    .navbar-dark .navbar-nav .nav-link.active {
+        color: #d62020 !important;
+        font-weight: bold;
+    }
+    .profile-avatar {
+        width: 32px;
+        height: 32px;
+        object-fit: cover;
+        border: 2px solid #fff;
+        transition: transform 0.2s;
+    }
+    .profile-avatar:hover {
+        transform: scale(1.1);
+    }

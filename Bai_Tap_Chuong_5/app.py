@@ -1,6 +1,18 @@
-from flask import Flask, render_template, request
+import os
+from datetime import date, timedelta
+from flask import Flask, render_template, request, session, flash, redirect, url_for
+from forms import RegistrationForm
 
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-chi-dung-khi-phat-trien')
+
+app.permanent_session_lifetime = timedelta(days=7)
+
+USERS = {
+    "admin": "admin123",
+    "an": "an123456"
+}
 
 @app.context_processor
 def inject_helpers():
@@ -201,6 +213,59 @@ def grade():
         errors=errors,
         result=result
     )
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if 'user' in session:
+        return redirect(url_for('bmi'))
+
+    username = ""
+    if request.method == 'POST':
+        username = request.form.get('username', '').strip() 
+        password = request.form.get('password', '')
+        remember = request.form.get('remember')
+
+        if username in USERS and USERS[username] == password:
+            session['user'] = username
+            if remember:
+                session.permanent = True
+                
+            flash(f'Đăng nhập thành công. Xin chào {username}!', 'success')
+            return redirect(url_for('bmi')) 
+        else:
+            flash('Sai tên đăng nhập hoặc mật khẩu.', 'danger')
+
+    return render_template('login.html', username=username)
+
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.pop('user', None)
+    flash('Bạn đã đăng xuất.', 'info')
+    return redirect(url_for('login'))
+
+@app.route('/profile')
+def profile():
+    if 'user' not in session:
+        flash('Vui lòng đăng nhập để xem hồ sơ.', 'warning')
+        return redirect(url_for('login'))
+        
+    return render_template('profile.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm(users_dict=USERS)
+    
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        
+        USERS[username] = password
+        
+        flash('Đăng ký thành công.', 'success')
+        return redirect(url_for('login'))
+        
+    return render_template('register.html', form=form)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

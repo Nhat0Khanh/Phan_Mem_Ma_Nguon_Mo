@@ -1,0 +1,25 @@
+{% macro render_field(field) %}
+  <div class="mb-3">
+    {% if field.type == 'BooleanField' %}
+      <div class="form-check">
+        {{ field(class="form-check-input " + ("is-invalid" if field.errors else "")) }}
+        {{ field.label(class="form-check-label") }}
+        {% if field.errors %}
+          {% for error in field.errors %}
+            <div class="invalid-feedback d-block">{{ error }}</div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    {% elif field.type != 'SubmitField' and field.type != 'CSRFTokenField' %}
+      {{ field.label(class="form-label fw-semibold") }}
+      {{ field(class="form-control " + ("is-invalid" if field.errors else ""), **kwargs) }}
+      {% if field.errors %}
+        {% for error in field.errors %}
+          <div class="invalid-feedback d-block">{{ error }}</div>
+        {% endfor %}
+      {% endif %}
+    {% else %}
+      {{ field(**kwargs) }}
+    {% endif %}
+  </div>
+{% endmacro %}

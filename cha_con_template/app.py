@@ -25,15 +25,12 @@ def about():
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
-        # Lấy thông tin khi người dùng bấm nút Gửi tin nhắn
         name = request.form.get('name')
         email = request.form.get('email')
         message = request.form.get('message')
         
-        # (Tại đây bạn có thể lưu vào CSDL hoặc gửi email thông báo)
         print(f"Nhận liên hệ từ {name} ({email}): {message}")
         
-        # Sau khi gửi xong thì tải lại trang contact
         return redirect(url_for('contact'))
         
     return render_template('contact.html')

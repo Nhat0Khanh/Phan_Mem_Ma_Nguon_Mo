@@ -3,6 +3,22 @@
         color: #d62020 !important;
         font-weight: bold;         
     }
+    
+    .navbar-dark .navbar-nav .nav-link.active {
+        color: #d62020 !important;
+        font-weight: bold;
+    }
+    .profile-avatar {
+        width: 32px;
+        height: 32px;
+        object-fit: cover;
+        border: 2px solid #fff;
+        transition: transform 0.2s;
+    }
+    .profile-avatar:hover {
+        transform: scale(1.1);
+    }
+
 </style>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4 shadow-sm">
     <div class="container">
@@ -17,13 +33,35 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
+        
         <div class="collapse navbar-collapse" id="navbarNav">
-            <div class="navbar-nav">
-                <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Trang chủ</a>
+            <div class="navbar-nav me-auto">
+                <a class="nav-link {% if request.path == '/' or request.path == '/calculator' %}active{% endif %}" href="/calculator">Máy tính</a>
                 <a class="nav-link {% if request.path == '/bmi' %}active{% endif %}" href="/bmi">Tính BMI</a>
-                <a class="nav-link {% if request.path == '/calculator' %}active{% endif %}" href="/calculator">Máy tính</a>
                 <a class="nav-link {% if request.path == '/diem' %}active{% endif %}" href="/diem">Tính điểm</a>
+                {% if session.user %}
+                    <a class="nav-link {% if request.path == '/profile' %}active{% endif %}" href="/profile">Hồ sơ</a>
+                {% endif %}
+            </div>
+            
+            <div class="navbar-nav ms-auto align-items-center gap-2">
+                {% if session.user %}
+                    <a href="/profile" title="Hồ sơ cá nhân">
+                        <img src="{{ url_for('static', filename='img/user.png') }}" 
+                            alt="Profile" 
+                            class="rounded-circle profile-avatar"
+                            onerror="this.src='https://cdn-icons-png.flaticon.com/512/847/847969.png'">
+                    </a>
+                    <span class="text-light fw-bold ms-1 me-2">Xin chào {{ session.user }}</span>
+                    <form action="/logout" method="POST" class="m-0 p-0">
+                        <button type="submit" class="btn btn-danger btn-sm fw-bold">Đăng xuất</button>
+                    </form>
+                {% else %}
+                    <a class="btn btn-outline-light btn-sm fw-bold" href="/login">Đăng nhập</a>
+                    <a class="btn btn-danger btn-sm fw-bold" href="/register">Đăng ký</a>
+                {% endif %}
             </div>
         </div>
+
     </div>
 </nav>

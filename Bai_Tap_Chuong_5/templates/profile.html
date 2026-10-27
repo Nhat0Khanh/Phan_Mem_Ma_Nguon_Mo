@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Hồ sơ cá nhân{% endblock %}
+
+{% block content %}
+<div class="bg-white p-4 rounded shadow-sm border text-center">
+    <h3 class="text-primary fw-bold mb-3">Hồ sơ cá nhân</h3>
+    <p class="fs-5">Xin chào tài khoản <strong class="text-danger">{{ session.user }}</strong>!</p>
+    <p class="text-muted">Bạn đang xem trang bảo mật. Trang này chỉ hiển thị khi đã đăng nhập hệ thống.</p>
+</div>
+{% endblock %}

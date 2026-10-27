@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from "_form_helpers.html" import render_field %}
+
+{% block title %}Đăng ký tài khoản{% endblock %}
+
+{% block content %}
+<div class="bg-white p-4 rounded shadow-sm border">
+    <h3 class="text-danger fw-bold mb-4 text-center">Đăng ký tài khoản</h3>
+
+    <form action="/register" method="POST" novalidate>
+        {{ form.hidden_tag() }}
+
+        {{ render_field(form.username, placeholder="Ví dụ: sv_moi") }}
+        {{ render_field(form.email, placeholder="Ví dụ: a@b.vn") }}
+        {{ render_field(form.password, placeholder="Tối thiểu 8 ký tự") }}
+        {{ render_field(form.confirm_password, placeholder="Nhập lại mật khẩu") }}
+        {{ render_field(form.accept_terms) }}
+
+        <div class="mt-4">
+            {{ form.submit(class="btn btn-danger w-100 fw-bold py-2") }}
+        </div>
+    </form>
+</div>
+{% endblock %}
